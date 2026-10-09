@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { UpthrustLogo } from './UpthrustLogo';
 
@@ -8,9 +8,33 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenContact }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="w-full relative z-30 select-none">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
+    <header 
+      className={`sticky top-0 w-full z-40 select-none transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/90 backdrop-blur-md border-b border-black/10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] py-2 sm:py-3'
+          : 'bg-white/95 border-b border-transparent py-3 sm:py-5'
+      }`}
+      style={{
+        backgroundImage: !isScrolled ? `
+          linear-gradient(to right, rgba(0, 0, 0, 0.055) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.055) 1px, transparent 1px)
+        ` : undefined,
+        backgroundSize: '80px 80px',
+      }}
+    >
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between transition-all">
         
         {/* Brand Lockup: Logo matching Figma */}
         <motion.a 
@@ -38,3 +62,4 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact }) => {
     </header>
   );
 };
+

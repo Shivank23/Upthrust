@@ -26,6 +26,14 @@ export function pushToDataLayer(event: string, payload: Record<string, any> = {}
 
     window.dataLayer.push(eventObject);
 
+    // DevTools visual feedback for rapid verification
+    console.log(
+      `%c[GTM dataLayer]%c Pushed event: "${event}"`,
+      'background: #FF3D00; color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold;',
+      'color: inherit; font-weight: bold;',
+      eventObject
+    );
+
     const recordedEvent: DataLayerEvent = {
       id: `gtm_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
       timestamp: new Date().toLocaleTimeString(),

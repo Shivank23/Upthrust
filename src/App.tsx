@@ -66,9 +66,18 @@ export default function App() {
         style={{ scaleX }}
       />
 
-      {/* 1. Header & Hero sharing the continuous grid from top of viewport matching Figma */}
+      {/* Sticky Top Navbar */}
+      <Header
+        onOpenContact={() => {
+          setSelectedService('Strategy and Insight');
+          setIsContactOpen(true);
+        }}
+        onOpenCMS={() => setIsCMSOpen(true)}
+      />
+
+      {/* 1. Hero with continuous precision grid matching Figma */}
       <div className="relative w-full bg-white overflow-hidden">
-        {/* Continuous Precision Square Grid covering Navbar and Hero */}
+        {/* Continuous Precision Square Grid covering Hero */}
         <div 
           className="absolute inset-0 pointer-events-none opacity-90 z-0"
           style={{
@@ -79,14 +88,6 @@ export default function App() {
             backgroundSize: '80px 80px',
           }}
           aria-hidden="true"
-        />
-
-        <Header
-          onOpenContact={() => {
-            setSelectedService('Strategy and Insight');
-            setIsContactOpen(true);
-          }}
-          onOpenCMS={() => setIsCMSOpen(true)}
         />
 
         <Hero
