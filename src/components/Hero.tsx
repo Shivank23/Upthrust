@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { PageContent } from '../types';
-import venusBustFacingLeftWebp from '../assets/images/venus_bust_facing_left.webp';
-import venusBustFacingLeftPng from '../assets/images/venus_bust_facing_left.png';
+const VENUS_BUST_WEBP = '/images/venus_bust_facing_left.webp';
+const VENUS_BUST_PNG = '/images/venus_bust_facing_left.png';
 
 interface HeroProps {
   content: PageContent['hero'];
@@ -11,9 +11,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
   const { scrollY } = useScroll();
-  // Elegant subtle scroll parallax that adds physical depth without causing layout shift
+  // Subtle scroll parallax that adds physical depth without causing layout shift
   const yBustParallax = useTransform(scrollY, [0, 600], [0, 45]);
-  const yTextParallax = useTransform(scrollY, [0, 600], [0, -20]);
   const opacityBust = useTransform(scrollY, [0, 700], [1, 0.75]);
 
   return (
@@ -34,40 +33,23 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
 
       <div className="relative max-w-[1440px] mx-auto px-3 sm:px-8 lg:px-12 pt-4 sm:pt-8 pb-8 sm:pb-14 z-10 flex flex-col items-center">
         
-        {/* 1. TOP HEADLINE: "BOLD DESIGN" (Lighthouse & WCAG Compliant Primary H1) */}
-        <motion.h1 
-          style={{ y: yTextParallax }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        {/* 1. TOP HEADLINE: "BOLD DESIGN" (Instant paint for optimal LCP & FCP) */}
+        <h1 
           className="w-full text-center relative z-20 m-0 p-0 font-anton font-black italic tracking-[-0.035em] uppercase text-[15vw] sm:text-[14vw] md:text-[13vw] lg:text-[160px] xl:text-[180px] leading-[0.88] select-none flex items-center justify-center gap-2 sm:gap-6 md:gap-8 flex-wrap"
         >
-          <motion.span 
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-display-text"
-          >
+          <span className="hero-display-text hero-title-enter">
             {content.topTitle?.split(' ')[0] || 'BOLD'}
-          </motion.span>
-          <motion.span 
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-display-text"
-          >
+          </span>
+          <span className="hero-display-text hero-title-enter" style={{ animationDelay: '0.08s' }}>
             {content.topTitle?.split(' ')[1] || 'DESIGN'}
-          </motion.span>
-        </motion.h1>
+          </span>
+        </h1>
 
         {/* 2. CENTER STAGE: Aphrodite / Venus Bust flanked by editorial annotations */}
         <div className="relative w-full -mt-2 sm:-mt-8 md:-mt-12 -mb-2 sm:-mb-8 md:-mb-12 min-h-[250px] xs:min-h-[290px] sm:min-h-[420px] md:min-h-[480px] flex items-center justify-between">
           
           {/* LEFT COLUMN: Annotations */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          <div 
             className="z-20 flex flex-col justify-center gap-3 xs:gap-5 sm:gap-10 pl-0 xs:pl-1 sm:pl-4 max-w-[105px] xs:max-w-[140px] sm:max-w-[200px]"
           >
             {/* STRATEGY IS CHEAPER */}
@@ -145,7 +127,7 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
                 </svg>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* CENTER: Classical Aphrodite / Venus Bust Sculpture with Floating Breathing Motion & Scroll Parallax */}
           <motion.div 
@@ -153,9 +135,6 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
               y: yBustParallax,
               opacity: opacityBust 
             }}
-            initial={{ opacity: 0, scale: 0.93 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-44 xs:w-56 sm:w-72 md:w-88 lg:w-[420px] xl:w-[460px] pointer-events-none select-none"
           >
             {/* Ambient Idle Floating Oscillation */}
@@ -173,12 +152,13 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
                 className="w-full h-auto cursor-pointer pointer-events-auto filter contrast-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3D00] rounded-lg"
               >
                 <picture>
-                  <source srcSet={venusBustFacingLeftWebp} type="image/webp" />
+                  <source srcSet={VENUS_BUST_WEBP} type="image/webp" />
                   <img
-                    src={venusBustFacingLeftPng}
+                    src={VENUS_BUST_PNG}
                     alt="Classical Greek sculpture with chromatic iridescent finish representing bold form"
                     width={460}
                     height={520}
+                    style={{ aspectRatio: '460 / 520' }}
                     className="w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.12)]"
                     loading="eager"
                     decoding="async"
@@ -191,10 +171,7 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
           </motion.div>
 
           {/* RIGHT COLUMN: Annotations & Rotating Blueprint Schematic */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          <div 
             className="z-20 flex flex-col justify-between h-full pr-0 xs:pr-1 sm:pr-4 text-right max-w-[105px] xs:max-w-[140px] sm:max-w-[200px]"
           >
             {/* COMFORTABLE IS EXPENSIVE */}
@@ -228,16 +205,11 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
             </div>
 
             {/* Giant THAT Callout */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="my-1.5 xs:my-3 sm:my-6 relative z-30"
-            >
+            <div className="my-1.5 xs:my-3 sm:my-6 relative z-30">
               <span className="font-anton font-black italic text-4xl xs:text-5xl sm:text-7xl lg:text-[100px] xl:text-[116px] uppercase tracking-[-0.03em] leading-none inline-block select-none hero-display-text">
                 {content.middleWord || 'THAT'}
               </span>
-            </motion.div>
+            </div>
 
             {/* Technical Blueprint Vector Drafting Schematic with continuous ambient slow rotation */}
             <div 
@@ -278,24 +250,21 @@ export const Hero: React.FC<HeroProps> = ({ content, onContactClick }) => {
                 </svg>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
 
         {/* 3. BOTTOM HEADLINE: "PERFORMS" */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full text-center relative z-20"
-        >
+        <div className="w-full text-center relative z-20">
           <div 
             aria-hidden="true"
             className="font-anton font-black italic tracking-[-0.035em] uppercase text-[15vw] sm:text-[14vw] md:text-[13vw] lg:text-[160px] xl:text-[180px] leading-[0.88] select-none"
           >
-            <span className="hero-display-text">{content.bottomTitle || 'PERFORMS'}</span>
+            <span className="hero-display-text hero-title-enter" style={{ animationDelay: '0.12s' }}>
+              {content.bottomTitle || 'PERFORMS'}
+            </span>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

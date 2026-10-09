@@ -9,12 +9,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onOpenContact }) => {
   return (
-    <motion.header 
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full relative z-30 select-none"
-    >
+    <header className="w-full relative z-30 select-none">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
         
         {/* Brand Lockup: Logo matching Figma */}
@@ -40,6 +35,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact }) => {
         </motion.button>
 
       </div>
-    </motion.header>
+    </header>
   );
 };
